@@ -27,5 +27,5 @@ export class NotesListComponent implements OnInit {
     this.noteService.create(this.content);
     this.content = '';
   }
-
+  
 }

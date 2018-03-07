@@ -13,12 +13,20 @@ export class NoteDetailComponent {
 
   @Input()
   note: Note;
-
+  
   constructor(private noteService: NoteService) { }
 
   addHeartToNote(val: number) {
     if (this.note.id) {
       this.noteService.updateNote(this.note.id, { hearts: val + 1 });
+    } else {
+      console.error('Note missing ID!');
+    }
+  }
+
+  dislikeNote(val: number) {
+    if (this.note.id) {
+      this.noteService.updateNote(this.note.id, { dislikes: val + 1 });
     } else {
       console.error('Note missing ID!');
     }

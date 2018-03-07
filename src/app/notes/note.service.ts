@@ -20,7 +20,7 @@ export class NoteService {
   noteDocument:   AngularFirestoreDocument<Node>;
 
   constructor(private afs: AngularFirestore) {
-    this.notesCollection = this.afs.collection('notes', (ref) => ref.orderBy('time', 'desc').limit(5));
+    this.notesCollection =  this.afs.collection('notes', (ref) => ref.orderBy('time', 'desc').limit(5));
   }
 
   getData(): Observable<Note[]> {
@@ -32,7 +32,7 @@ export class NoteService {
     return this.notesCollection.snapshotChanges().map((actions) => {
       return actions.map((a) => {
         const data = a.payload.doc.data() as Note;
-        return { id: a.payload.doc.id, content: data.content, hearts: data.hearts, time: data.time };
+        return { id: a.payload.doc.id, content: data.content, hearts: data.hearts, dislikes: data.dislikes, time: data.time };
       });
     });
   }
@@ -45,6 +45,7 @@ export class NoteService {
     const note = {
       content,
       hearts: 0,
+      dislikes: 0,
       time: new Date().getTime(),
     };
     return this.notesCollection.add(note);
